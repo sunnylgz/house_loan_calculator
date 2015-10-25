@@ -70,6 +70,7 @@ int main() {
 	print_pay_list(pay_list, month);
 
 	printf("compare buying & renting house\n");
+	rent_pay = (rent_pay < 1500)? 1500: rent_pay;
 	loan_rent_compare(down_pay, rent_pay, INV_INTEREST, price, year, pay_list);
 
 	free(pay_list);
