@@ -8,6 +8,8 @@
 #define COMMERCIAL_LOAN 90
 #define PRO_INTEREST 3.25f
 #define COM_INTEREST 4.9f
+#define INV_INTEREST 3.0f
+#define RENT_PRICE_RATIO 15		// (div 10000)
 
 int print_pay_list(t_mon_pay *pay_list, int month) {
 	int i;
@@ -37,11 +39,15 @@ int print_pay_list(t_mon_pay *pay_list, int month) {
 	return 0;
 }
 int main() {
-	int year = YEAR_PERIOD;
-	int month = year * 12;
+	int loan_year = YEAR_PERIOD;
+	int month = loan_year * 12;
 	int provident_fund_part = PROVIDENT_FUND;
 	int commercial_loan_part = COMMERCIAL_LOAN;
+	int price = (provident_fund_part + commercial_loan_part) * 10 / 7;
+	int rent_pay = price * RENT_PRICE_RATIO;
+	int down_pay = price * 3 / 10;
 	double monthly_pay;
+	int year = 5;       // used to compare buying & renting
 	int i;
 	t_mon_pay *pay_list = NULL;
 	t_mon_pay *pay_list2 = NULL;
@@ -62,6 +68,9 @@ int main() {
 
 	printf("constant payment: month pay is %.2f\n", monthly_pay);
 	print_pay_list(pay_list, month);
+
+	printf("compare buying & renting house\n");
+	loan_rent_compare(down_pay, rent_pay, INV_INTEREST, price, year, pay_list);
 
 	free(pay_list);
 	return 0;
